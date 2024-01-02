@@ -10,7 +10,7 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet } from "react-native";
 import Header from "../../components/Header";
 
-const Form = () => {
+const SignIn = () => {
   return (
     <GluestackUIProvider config={config}>
       <StatusBar></StatusBar>
@@ -45,4 +45,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Form;
+export default SignIn;

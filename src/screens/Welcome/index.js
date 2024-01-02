@@ -9,7 +9,7 @@ import {
 import { config } from "@gluestack-ui/config"; // Optional if you want to use default theme
 import { StyleSheet } from "react-native";
 
-const Login = () => {
+const Welcome = () => {
   return (
     <GluestackUIProvider config={config}>
       <VStack style={styles.container}>
@@ -51,4 +51,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Login;
+export default Welcome;
