@@ -1,13 +1,13 @@
-import { GluestackUIProvider } from "@gluestack-ui/themed";
-import { config } from "@gluestack-ui/config";
-import Login from "./src/screens/Login";
-import Form from "./src/screens/Form";
+import React from "react";
+import Routes from "./src/routes";
+import { NavigationContainer } from "@react-navigation/native";
+import { StatusBar } from "react-native";
 
 export default function App() {
   return (
-    <GluestackUIProvider config={config}>
-      {/* <Login /> */}
-      <Form />
-    </GluestackUIProvider>
+    <NavigationContainer>
+      <StatusBar backgroundColor="#5699D2" barStyle="light-content" />
+      <Routes />
+    </NavigationContainer>
   );
 }
