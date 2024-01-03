@@ -3,7 +3,6 @@ import {
   Image,
   Button,
   ButtonText,
-  VStack,
 } from "@gluestack-ui/themed";
 import { config } from "@gluestack-ui/config"; // Optional if you want to use default theme
 import { StyleSheet, View } from "react-native";
@@ -27,7 +26,9 @@ const Welcome = () => {
           $active-bgColor="#5699D2"
           onPress={() => navigation.navigate("SignIn")}
         >
-          <ButtonText>Entrar</ButtonText>
+          <ButtonText fontWeight="$bold" fontSize={"$sm"}>
+            ENTRAR
+          </ButtonText>
         </Button>
       </View>
     </GluestackUIProvider>
@@ -46,7 +47,7 @@ const styles = StyleSheet.create({
   },
   button: {
     width: "80%",
-    borderRadius: 15,
+    borderRadius: 5,
     position: "absolute",
     bottom: 40,
   },
