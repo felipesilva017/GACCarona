@@ -1,44 +1,33 @@
 import { config } from "@gluestack-ui/config";
-import {
-  GluestackUIProvider,
-  VStack,
-  Text,
-  Box,
-  FormControl,
-} from "@gluestack-ui/themed";
+import { GluestackUIProvider, FormControl } from "@gluestack-ui/themed";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 import Header from "../../components/Header";
 
 const SignIn = () => {
   return (
     <GluestackUIProvider config={config}>
-      <StatusBar></StatusBar>
-      <VStack style={styles.container}>
-        <Box style={{ height: "13%" }}>
+      <View style={styles.container}>
+        <View style={{ height: "10%" }}>
           <Header />
-        </Box>
-        <Box style={styles.content}>
-          <Text color="#1D3F72" fontSize="$2xl">
+        </View>
+        <View style={styles.content}>
+          <Text color="#1D3F72" style={{ borderWidth: 2 }}>
             Entrar
           </Text>
-          <Box>
-            <FormControl></FormControl>
-          </Box>
-        </Box>
-      </VStack>
+        </View>
+      </View>
     </GluestackUIProvider>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    height: "100%",
-    borderWidth: 2,
+    flex: 1,
   },
   content: {
-    borderWidth: 5,
-    borderColor: "green",
+    // borderWidth: 5,
+    // borderColor: "green",
     alignItems: "center",
     height: "100%",
     paddingTop: 20,

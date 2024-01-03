@@ -1,34 +1,35 @@
 import {
   GluestackUIProvider,
-  Center,
   Image,
   Button,
   ButtonText,
   VStack,
 } from "@gluestack-ui/themed";
 import { config } from "@gluestack-ui/config"; // Optional if you want to use default theme
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 const Welcome = () => {
+  const navigation = useNavigation();
+
   return (
     <GluestackUIProvider config={config}>
-      <VStack style={styles.container}>
-        <Center>
-          <Image
-            style={styles.image}
-            source={require("../../assets/logo-gac-login.png")}
-            alt={"Logo Aço cearense"}
-            resizeMode="contain"
-          ></Image>
-        </Center>
+      <View style={styles.container}>
+        <Image
+          style={styles.image}
+          source={require("../../assets/logo-gac-login.png")}
+          alt={"Logo Aço cearense"}
+          resizeMode="contain"
+        ></Image>
         <Button
           style={styles.button}
           bgColor="#1D3F72"
           $active-bgColor="#5699D2"
+          onPress={() => navigation.navigate("SignIn")}
         >
           <ButtonText>Entrar</ButtonText>
         </Button>
-      </VStack>
+      </View>
     </GluestackUIProvider>
   );
 };
@@ -45,9 +46,9 @@ const styles = StyleSheet.create({
   },
   button: {
     width: "80%",
-    borderRadius: 8,
+    borderRadius: 15,
     position: "absolute",
-    bottom: 20,
+    bottom: 40,
   },
 });
 
