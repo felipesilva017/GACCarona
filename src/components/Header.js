@@ -10,7 +10,7 @@ import { useNavigation } from "@react-navigation/native";
 import { StyleSheet, View } from "react-native";
 import { Shadow } from "react-native-shadow-2";
 
-const Header = () => {
+const Header = (props) => {
   const navigation = useNavigation();
 
   return (
@@ -23,8 +23,10 @@ const Header = () => {
       >
         <View style={styles.content}>
           <Button
+            opacity={props.isHome ? 0 : 1}
+            disabled={props.isDisable}
             bgColor="disable"
-            onPress={() => navigation.navigate("Welcome")}
+            onPress={() => navigation.goBack()}
             position="absolute"
             left={1}
           >
