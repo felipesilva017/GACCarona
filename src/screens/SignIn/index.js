@@ -9,7 +9,7 @@ import { useState } from "react";
 const SignIn = () => {
   const navigation = useNavigation();
 
-  const [email, setEmail] = useState("");
+  const [user, setuser] = useState("");
 
   const [password, setPassword] = useState("");
 
@@ -22,10 +22,10 @@ const SignIn = () => {
         <View style={styles.form}>
           <Text style={styles.formTitle}>Entrar</Text>
           <TextInput
-            placeholder="Digite seu email"
+            placeholder="Digite seu usuário"
             placeholderTextColor="#1D3F72"
-            onChangeText={setEmail}
-            value={email}
+            onChangeText={setuser}
+            value={user}
             style={styles.formInput}
           />
           <TextInput
