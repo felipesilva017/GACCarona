@@ -5,7 +5,8 @@ import {
   ButtonText,
 } from "@gluestack-ui/themed";
 import { config } from "@gluestack-ui/config"; // Optional if you want to use default theme
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
+import { styles } from "./styles";
 import { useNavigation } from "@react-navigation/native";
 
 const Welcome = () => {
@@ -34,23 +35,5 @@ const Welcome = () => {
     </GluestackUIProvider>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    height: "100%",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  image: {
-    width: 200,
-    height: 200,
-  },
-  button: {
-    width: "80%",
-    borderRadius: 5,
-    position: "absolute",
-    bottom: 40,
-  },
-});
 
 export default Welcome;

@@ -6,8 +6,9 @@ import {
   ButtonIcon,
   Button,
 } from "@gluestack-ui/themed";
+import { styles } from "./styles";
 import { useNavigation } from "@react-navigation/native";
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import { Shadow } from "react-native-shadow-2";
 
 const Header = (props) => {
@@ -34,7 +35,7 @@ const Header = (props) => {
           </Button>
           <Image
             resizeMode="contain"
-            source={require("../assets/logo-gac.png")}
+            source={require("../../assets/logo-gac.png")}
             alt="Logo GAC"
             // width="$96"
             width={200}
@@ -45,22 +46,5 @@ const Header = (props) => {
     </GluestackUIProvider>
   );
 };
-
-const styles = StyleSheet.create({
-  shadow: {
-    alignItems: "center",
-    justifyContent: "center",
-    width: "100%",
-    height: "100%",
-    // borderWidth: 2,
-  },
-  content: {
-    alignItems: "center",
-    justifyContent: "center",
-    width: "100%",
-    height: "100%",
-    // borderWidth: 2,
-  },
-});
 
 export default Header;
