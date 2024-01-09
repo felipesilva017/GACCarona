@@ -32,6 +32,6 @@ export const styles = StyleSheet.create({
   button: {
     marginTop: 10,
     width: "90%",
-    borderRadius: 5,
+    borderRadius: 8,
   },
 });
