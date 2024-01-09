@@ -2,6 +2,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import SignIn from "./screens/SignIn";
 import Welcome from "./screens/Welcome";
 import Home from "./screens/Home";
+import RequestRideMap from "./screens/RequestRideMap";
 
 const Stack = createNativeStackNavigator();
 
@@ -22,6 +23,11 @@ export default function Routes() {
         name="Home"
         options={{ headerShown: false }}
         component={Home}
+      />
+      <Stack.Screen
+        name="RequestRideMap"
+        options={{ headerShown: false }}
+        component={RequestRideMap}
       />
     </Stack.Navigator>
   );
