@@ -12,7 +12,7 @@ export const styles = StyleSheet.create({
   button: {
     marginTop: 10,
     width: "70%",
-    borderRadius: 20,
+    borderRadius: 8,
     backgroundColor: "#fff",
     borderWidth: 1,
     borderColor: "#ccc",

@@ -4,13 +4,19 @@ import { styles } from "./styles";
 import { View } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Shadow } from "react-native-shadow-2";
+import { useNavigation } from "@react-navigation/native";
 
 export const NavigationBar = () => {
+  const navigation = useNavigation();
   return (
     <GluestackUIProvider config={config}>
       <Shadow distance={10} startColor={"#0000001f"} radius={8}>
         <View style={styles.container}>
-          <Button style={styles.button} bgColor="disable">
+          <Button
+            style={styles.button}
+            bgColor="disable"
+            onPress={() => navigation.navigate("Home")}
+          >
             <MaterialIcons name="home" size={25} color="#1D3F72" />
             <ButtonText style={styles.buttonText}>Home</ButtonText>
           </Button>
