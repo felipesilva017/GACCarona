@@ -17,7 +17,7 @@ const SignIn = () => {
   return (
     <GluestackUIProvider config={config}>
       <View style={styles.container}>
-        <View style={{ height: "10%" }}>
+        <View style={{ height: "8%" }}>
           <Header />
         </View>
         <View style={styles.form}>

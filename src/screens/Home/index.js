@@ -12,7 +12,7 @@ const Home = () => {
   return (
     <GluestackUIProvider>
       <View style={styles.container}>
-        <View style={{ height: "10%" }}>
+        <View style={{ height: "8%" }}>
           <Header isHome={true} isDisable={true} />
         </View>
         <View
@@ -25,7 +25,7 @@ const Home = () => {
           <Text style={styles.typeUser}>Passageiro</Text>
           <Button
             style={[styles.button, styles.boxShadow]}
-            onPress={() => navigation.navigate("")}
+            onPress={() => navigation.navigate("RequestRideMap")}
           >
             <MaterialIcons
               style={styles.buttonIcon}
@@ -66,7 +66,7 @@ const Home = () => {
             </ButtonText>
           </Button>
         </View>
-        <View style={{ height: "10%" }}>
+        <View style={{ height: "8%" }}>
           <NavigationBar />
         </View>
       </View>
