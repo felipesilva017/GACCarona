@@ -12,17 +12,36 @@ const RequestRideMap = () => {
   const navigation = useNavigation();
   const [origin, setOrigin] = useState(null);
   const [destination, setDestination] = useState(null);
+  let watchId;
 
   useEffect(() => {
     requestLocationPermissions();
+    () => {
+      if (watchId) {
+        watchId.remove();
+      }
+    };
   }, []);
 
   async function requestLocationPermissions() {
-    const { granted } = await Location.requestForegroundPermissionsAsync();
-    if (granted) {
-      const location = await Location.getCurrentPositionAsync();
-      setOrigin(location);
+    let { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== "granted") {
+      console.error("Permission to access location was denied");
+      return;
     }
+    getLocation();
+  }
+
+  async function getLocation() {
+    let location = await Location.getCurrentPositionAsync({});
+    setOrigin(location);
+
+    watchId = Location.watchPositionAsync(
+      { accuracy: Location.Accuracy.High, distanceInterval: 1 },
+      ({ coords }) => {
+        setOrigin(coords);
+      }
+    );
   }
 
   return (
@@ -32,6 +51,25 @@ const RequestRideMap = () => {
           <Header isHome={false} />
         </View>
         <View style={styles.content}>
+          <MapView
+            initialRegion={{
+              latitude: origin ? origin.latitude : 37.78825,
+              longitude: origin ? origin.longitude : -122.4324,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421,
+            }}
+            region={origin}
+            style={styles.map}
+            showsUserLocation={true}
+            onMapReady={getLocation}
+          >
+            <Marker
+              coordinate={{
+                latitude: origin ? origin.latitude : 37.78825,
+                longitude: origin ? origin.longitude : -122.4324,
+              }}
+            />
+          </MapView>
           <View style={styles.selectLocation}>
             <Button
               style={[styles.button, styles.boxShadow]}
@@ -49,22 +87,6 @@ const RequestRideMap = () => {
               </View>
             </Button>
           </View>
-          <MapView
-            initialRegion={{
-              latitude: 37.78825,
-              longitude: -122.4324,
-              latitudeDelta: 0.0922,
-              longitudeDelta: 0.0421,
-            }}
-            style={styles.map}
-          >
-            <Marker
-              coordinate={{
-                latitude: 37.78825,
-                longitude: -122.4324,
-              }}
-            />
-          </MapView>
         </View>
         <View style={{ height: "8%" }}>
           <NavigationBar />
@@ -82,22 +104,18 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   map: {
-    zIndex: 0,
     flex: 1,
   },
   selectLocation: {
-    zIndex: 1,
     position: "absolute",
-    width: "100%",
-    height: "100%",
+    top: "15%",
     alignItems: "center",
+    alignSelf: "center",
     justifyContent: "space-evenly",
   },
   button: {
-    position: "absolute",
     width: "90%",
-    height: "12%",
-    top: "5%",
+    height: "150%",
     borderRadius: 8,
     backgroundColor: "#fff",
     borderWidth: 1,
