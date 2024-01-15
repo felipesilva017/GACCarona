@@ -5,44 +5,50 @@ import Header from "../../components/Header";
 import NavigationBar from "../../components/NavigationBar";
 import { useNavigation } from "@react-navigation/native";
 import MapView, { Marker } from "react-native-maps";
-import { useEffect, useState } from "react";
-import * as Location from "expo-location";
+import { useEffect, useState, useRef } from "react";
+import {
+  watchPositionAsync,
+  requestForegroundPermissionsAsync,
+  getCurrentPositionAsync,
+  LocationAccuracy,
+} from "expo-location";
 
 const RequestRideMap = () => {
   const navigation = useNavigation();
-  const [origin, setOrigin] = useState(null);
+  const [location, setLocation] = useState(null);
   const [destination, setDestination] = useState(null);
-  let watchId;
+
+  const mapRef = useRef(null);
 
   useEffect(() => {
-    requestLocationPermissions();
-    () => {
-      if (watchId) {
-        watchId.remove();
+    (async () => {
+      let { status } = await requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        setErrorMsg("Permission to access location was denied");
+        return;
       }
-    };
+
+      let location = await getCurrentPositionAsync({});
+      setLocation(location);
+    })();
   }, []);
 
-  async function requestLocationPermissions() {
-    let { status } = await Location.requestForegroundPermissionsAsync();
-    if (status !== "granted") {
-      console.error("Permission to access location was denied");
-      return;
-    }
-    getLocation();
-  }
-
-  async function getLocation() {
-    let location = await Location.getCurrentPositionAsync({});
-    setOrigin(location);
-
-    watchId = Location.watchPositionAsync(
-      { accuracy: Location.Accuracy.High, distanceInterval: 1 },
-      ({ coords }) => {
-        setOrigin(coords);
+  useEffect(() => {
+    watchPositionAsync(
+      {
+        accurancy: LocationAccuracy.Highest,
+        timeInterval: 1000,
+        distanceInterval: 1,
+      },
+      (response) => {
+        console.log("Nova localização", response);
+        setLocation(response);
+        mapRef.current?.animateCamera({
+          center: response.coords,
+        });
       }
     );
-  }
+  }, []);
 
   return (
     <GluestackUIProvider config={config}>
@@ -52,23 +58,27 @@ const RequestRideMap = () => {
         </View>
         <View style={styles.content}>
           <MapView
+            ref={mapRef}
             initialRegion={{
-              latitude: origin ? origin.latitude : 37.78825,
-              longitude: origin ? origin.longitude : -122.4324,
-              latitudeDelta: 0.0922,
-              longitudeDelta: 0.0421,
+              latitude: location ? location.coords.latitude : 37.78825,
+              longitude: location ? location.coords.longitude : -122.4324,
+              latitudeDelta: 0.005,
+              longitudeDelta: 0.005,
             }}
-            region={origin}
             style={styles.map}
-            showsUserLocation={true}
-            onMapReady={getLocation}
+            rotateEnabled={false}
+            maxZoomLevel={30}
+            minZoomLevel={13}
           >
-            <Marker
-              coordinate={{
-                latitude: origin ? origin.latitude : 37.78825,
-                longitude: origin ? origin.longitude : -122.4324,
-              }}
-            />
+            {location && (
+              <Marker
+                coordinate={{
+                  latitude: location ? location.coords.latitude : 37.78825,
+                  longitude: location ? location.coords.longitude : -122.4324,
+                }}
+                // style={{ display: location ? "" : "none" }}
+              />
+            )}
           </MapView>
           <View style={styles.selectLocation}>
             <Button
@@ -107,15 +117,18 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   selectLocation: {
+    borderWidth: 2,
+    width: "90%",
+    height: "12%",
     position: "absolute",
-    top: "15%",
+    top: "12%",
     alignItems: "center",
     alignSelf: "center",
     justifyContent: "space-evenly",
   },
   button: {
-    width: "90%",
-    height: "150%",
+    flex: 1,
+    width: "100%",
     borderRadius: 8,
     backgroundColor: "#fff",
     borderWidth: 1,
@@ -129,8 +142,6 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: "bold",
   },
-
-  leftSide: {},
 });
 
 const generateBoxShadowStyle = (
