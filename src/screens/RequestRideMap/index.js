@@ -67,8 +67,11 @@ const RequestRideMap = () => {
             }}
             style={styles.map}
             rotateEnabled={false}
-            maxZoomLevel={30}
+            maxZoomLevel={20}
             minZoomLevel={13}
+            showsUserLocation={true}
+            pitchEnabled={false}
+            showsTraffic={false}
           >
             {location && (
               <Marker
