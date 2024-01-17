@@ -1,10 +1,9 @@
-import { View, StyleSheet, Text, Platform } from "react-native";
+import { View, Text, Platform } from "react-native";
 import { GluestackUIProvider, Button } from "@gluestack-ui/themed";
 import { config } from "@gluestack-ui/config";
 import Header from "../../components/Header";
 import NavigationBar from "../../components/NavigationBar";
 import { useNavigation } from "@react-navigation/native";
-import MapView, { Marker } from "react-native-maps";
 import { useEffect, useState, useRef } from "react";
 import {
   watchPositionAsync,
@@ -13,6 +12,7 @@ import {
   LocationAccuracy,
 } from "expo-location";
 import { styles } from "./styles";
+import MapView, { Marker } from "react-native-maps";
 
 const RequestRideMap = () => {
   const navigation = useNavigation();
@@ -23,14 +23,19 @@ const RequestRideMap = () => {
 
   useEffect(() => {
     (async () => {
-      let { status } = await requestForegroundPermissionsAsync();
-      if (status !== "granted") {
-        setErrorMsg("Permission to access location was denied");
-        return;
+      const obj = await requestForegroundPermissionsAsync();
+      const { granted } = obj;
+      console.log("Ver status", JSON.stringify(obj));
+
+      if (!granted) {
+        console.log("Permission to access location was denied");
+        return null;
       }
 
-      let location = await getCurrentPositionAsync({});
+      const location = await getCurrentPositionAsync();
+      console.log("Ver location antes do set", location);
       setLocation(location);
+      console.log("Console depois do set", location);
     })();
   }, []);
 
